@@ -1,0 +1,359 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+/* =========================================
+   1. GLOBAL & THEME
+========================================= */
+
+:root {
+  font-family: 'Space Grotesk', sans-serif;
+  color: #18181b;
+  background: #fff8e7;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  --cream: #fff8e7;
+  --maroon: #930500;
+  --maroon-hover: #b51a12;
+  --white: #ffffff;
+  --text-muted: #51483e;
+  --border: #eee9df;
+  --green: #279b61;
+  --purple: #5548c7;
+
+  /* Text that sits directly on the dark arena photo */
+  --on-arena: #ffffff;
+  --on-arena-muted: #fff1d0;
+  --on-arena-accent: #ffc94d;
+  --arena-shadow: 0 2px 4px rgba(0,0,0,.75), 0 4px 22px rgba(0,0,0,.65);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body { min-width: 320px; min-height: 100vh; font-family: inherit; background: var(--cream); color: #24211e; font-weight: 500; }
+
+button, input { font: inherit; }
+
+button:focus-visible, a:focus-visible { outline: 3px solid #b99b67; outline-offset: 4px; }
+
+button:disabled { cursor: not-allowed; }
+
+/* =========================================
+   2. MAIN LAYOUT & ARENA BACKGROUND
+========================================= */
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #120a07;
+  /* Dark scrim keeps light text readable on the bright floor and the red crowd */
+  background-image:
+    linear-gradient(180deg, rgba(8,4,2,.45) 0%, rgba(8,4,2,.3) 55%, rgba(8,4,2,.5) 100%),
+    url('/images/istockphoto-1796693933-612x612.jpg');
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* =========================================
+   3. HEADER & BRAND
+========================================= */
+
+.header {
+  position: relative;
+  z-index: 2;
+  height: 84px;
+  flex-shrink: 0;
+  padding: 0 7%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+}
+
+.brand { display: flex; align-items: center; gap: 12px; }
+
+.brand-icon { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 50%; background: var(--maroon); }
+
+.brand h1 { color: var(--maroon); font-size: 25px; font-weight: 700; }
+
+.header-label { color: #51483e; font-size: 12px; font-weight: 600; letter-spacing: 1.8px; }
+
+/* =========================================
+   4. HERO SECTION
+========================================= */
+
+.hero {
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 850px;
+  margin: 0 auto;
+  padding: 75px 24px 45px;
+  text-align: center;
+  background: transparent;
+}
+
+.eyebrow { color: var(--on-arena-accent); font-size: 12px; font-weight: 700; letter-spacing: 3px; text-shadow: var(--arena-shadow); }
+
+.hero h2 { margin-top: 22px; color: var(--on-arena); font-size: clamp(42px, 7vw, 76px); line-height: 1.08; font-weight: 700; text-shadow: var(--arena-shadow); }
+
+.hero h2 span { color: var(--on-arena-accent); }
+
+.description { margin: 20px auto 0; color: var(--on-arena-muted); font-size: 15px; font-weight: 600; line-height: 1.8; text-shadow: var(--arena-shadow); }
+
+/* =========================================
+   5. CONVERTER & FORMAT SELECTOR
+========================================= */
+
+.converter-section { width: min(calc(100% - 40px), 960px); margin: 0 auto 65px; text-align: center; background: transparent; }
+
+.format-list { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 35px; }
+
+.format-chip { padding: 11px 20px; border: 0; border-radius: 30px; background: var(--white); color: #242424; font-size: 13px; font-weight: 700; cursor: pointer; box-shadow: 0 3px 0 #222; transition: background .2s, color .2s, transform .2s; }
+
+.format-chip:hover:not(:disabled) { background: #f5e8d1; transform: translateY(-2px); }
+
+.format-chip.active { background: #990b05; color: var(--white); box-shadow: 0 3px 0 #222; }
+
+.format-chip:disabled { opacity: .65; }
+
+/* =========================================
+   6. UPLOAD COURT & DROP ZONE
+========================================= */
+
+.upload-court {
+  position: relative;
+  width: 100%;
+  max-width: 650px;
+  min-height: 520px;
+  margin: 0 auto;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  box-shadow: 0 8px 30px rgba(55,40,20,.08);
+  transition: background .25s ease, border-color .25s ease;
+}
+
+.upload-court.drag-active { background: #fffaf2; border-color: var(--maroon); }
+
+.drop-zone { position: absolute; top: 20px; left: 22px; right: 22px; z-index: 1; height: 255px; background: #fffefe; border-radius: 18px; pointer-events: none; transition: background .25s ease; }
+
+.drop-zone-active { background: #fffaf2; }
+
+.drop-zone-outline { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; pointer-events: none; }
+
+.drop-zone-outline rect { fill: none; stroke: #c9b9a2; stroke-width: 2; stroke-dasharray: 6 8; stroke-linecap: round; transition: stroke .2s ease; }
+
+.drop-zone-active .drop-zone-outline rect { stroke: var(--purple); }
+
+/* =========================================
+   7. EMPTY UPLOAD STATE
+========================================= */
+
+.upload-empty-state { position: absolute; top: 32px; left: 50%; z-index: 2; width: 100%; display: flex; flex-direction: column; align-items: center; gap: 8px; transform: translateX(-50%); color: #51483e; font-size: 13px; font-weight: 500; text-align: center; transition: opacity .3s ease; }
+
+.upload-empty-state.is-hidden { opacity: 0; }
+
+.upload-empty-state strong { color: #24211e; font-size: 15px; font-weight: 700; }
+
+.upload-cloud-icon { color: var(--maroon); font-size: 25px; }
+
+/* =========================================
+   8. FILE PROGRESS CARD
+========================================= */
+
+.upload-progress-card { position: absolute; top: 15px; left: 15px; right: 15px; z-index: 3; min-height: 65px; padding: 12px 14px; background: #ffffff; border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 3px 12px rgba(0,0,0,.05); text-align: left; opacity: 0; transform: translateY(6px) scale(.98); pointer-events: none; transition: opacity .3s ease, transform .3s ease; }
+
+.upload-progress-card.is-visible { opacity: 1; transform: none; }
+
+.progress-file-top { display: flex; align-items: center; gap: 10px; min-width: 0; }
+
+.file-type-badge { flex-shrink: 0; padding: 4px 7px; border-radius: 4px; background: #f0e8e0; color: var(--maroon); font-size: 10px; font-weight: 700; }
+
+.progress-filename { flex: 1; min-width: 0; overflow: hidden; color: #292521; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; font-weight: 600; }
+
+.progress-status { flex-shrink: 0; color: #51483e; font-size: 11px; font-weight: 700; }
+
+.progress-status.done { color: var(--green); }
+
+.progress-status.error { color: #c0392b; }
+
+.progress-track { height: 5px; margin-top: 10px; overflow: hidden; background: #eee9e1; border-radius: 20px; }
+
+.progress-fill { width: 0; height: 100%; background: var(--maroon); border-radius: 20px; transition: width .25s ease; }
+
+.progress-fill.completed { background: var(--green); }
+
+.progress-file-bottom { display: flex; justify-content: space-between; gap: 10px; margin-top: 7px; color: #51483e; font-size: 11px; font-weight: 500; }
+
+/* =========================================
+   9. BASKETBALL HOOP
+========================================= */
+
+.basket-assembly { position: absolute; top: 150px; left: 50%; z-index: 4; width: 220px; height: 210px; transform: translateX(-50%); pointer-events: none; }
+
+.basket-art { display: block; width: 220px; height: 210px; overflow: visible; }
+
+/* The rim uses the same yellow as the hero accent; the thin shadow keeps it crisp on the white card */
+.basket-rim { stroke: var(--on-arena-accent); filter: drop-shadow(0 1.5px 0 rgba(160,105,0,.55)); }
+
+.basket-rim-inner { stroke: #fff0c2; }
+
+/* Backboard target square, same yellow as the rim */
+.basket-target { stroke: var(--on-arena-accent); filter: drop-shadow(0 1px 0 rgba(160,105,0,.45)); }
+
+/* The net hangs from the rim: on a score it stretches down, then settles with a damped bounce */
+.basket-net { transform-box: view-box; transform-origin: 120px 110px; }
+
+.basket-assembly.net-scored .basket-net { animation: net-swish .85s cubic-bezier(.3,.6,.4,1); }
+
+@keyframes net-swish {
+  0% { transform: scale(1, 1); }
+  20% { transform: scale(.96, 1.2); }
+  42% { transform: scale(1.02, .95); }
+  64% { transform: scale(.99, 1.07); }
+  82% { transform: scale(1, .98); }
+  100% { transform: scale(1, 1); }
+}
+
+/* =========================================
+   10. PARTICLE TRAIL & AIM CANVAS
+========================================= */
+
+.particle-canvas { position: absolute; inset: 0; z-index: 6; width: 100%; height: 100%; pointer-events: none; }
+
+/* =========================================
+   11. DOCUMENT TOKEN
+========================================= */
+
+.document-token { position: absolute; left: 42px; bottom: 65px; z-index: 8; width: 75px; min-height: 88px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none; will-change: transform; animation: token-in .35s ease-out; }
+
+/* Opacity only: a transform here would override the inline drag/flight transform while it runs */
+@keyframes token-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.document-token.document-dragging { z-index: 8; cursor: grabbing; filter: drop-shadow(0 10px 10px rgba(0,0,0,.2)); }
+
+.document-token.projectile-active { z-index: 8; pointer-events: none; cursor: default; filter: drop-shadow(0 6px 9px rgba(0,0,0,.16)); }
+
+.document-paper { position: relative; width: 43px; height: 55px; display: flex; justify-content: center; align-items: flex-end; padding-bottom: 8px; background: var(--white); border: 1px solid #d9d9d9; border-radius: 4px; box-shadow: 0 3px 7px rgba(0,0,0,.09); transition: transform .18s ease; }
+
+/* Picked up: the page lifts and tilts slightly */
+.document-dragging .document-paper { transform: rotate(-7deg) scale(1.08); }
+
+.document-paper::before { content: ''; position: absolute; top: 11px; left: 8px; width: 23px; height: 2px; background: #dedede; box-shadow: 0 5px #dedede, 0 10px #dedede; }
+
+.document-fold { position: absolute; top: 0; right: 0; width: 12px; height: 12px; background: #eee9e1; border-left: 1px solid #ddd; border-bottom: 1px solid #ddd; clip-path: polygon(0 0, 100% 100%, 0 100%); }
+
+.document-paper span { position: relative; padding: 2px 5px; background: var(--maroon); color: var(--white); border-radius: 2px; font-size: 8px; font-weight: 700; }
+
+.document-token small { width: 95px; overflow: hidden; color: #51483e; text-overflow: ellipsis; white-space: nowrap; font-size: 10px; font-weight: 500; text-align: center; }
+
+/* =========================================
+   12. BROWSE FILE & COURT CAPTION
+========================================= */
+
+.court-bottom { position: absolute; bottom: 45px; left: 50%; z-index: 10; display: flex; flex-direction: column; align-items: center; gap: 7px; transform: translateX(-50%); }
+
+.browse-button { padding: 10px 25px; background: var(--white); border: 1px solid #ded5c5; border-radius: 25px; color: #24211e; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; transition: background .2s, color .2s, border-color .2s; }
+
+.browse-button:hover:not(:disabled) { background: var(--maroon); color: var(--white); border-color: var(--maroon); }
+
+.browse-button:disabled { opacity: .6; }
+
+.court-bottom p { color: #51483e; font-size: 11px; font-weight: 500; white-space: nowrap; }
+
+.court-caption { position: absolute; right: 0; bottom: 14px; left: 0; z-index: 10; margin: 0; padding: 0 8px; color: #51483e; font-size: 10px; font-weight: 600; letter-spacing: 1.3px; text-align: center; }
+
+/* =========================================
+   13. ERROR & NOTIFICATION
+========================================= */
+
+.message-box { max-width: 650px; margin: 18px auto 0; padding: 13px 16px; display: flex; align-items: center; gap: 10px; border-radius: 10px; font-size: 13px; text-align: left; }
+
+.error-message { background: #fff0ef; color: #a21b16; }
+
+/* =========================================
+   14. CONVERSION RESULT
+========================================= */
+
+.result-card { max-width: 650px; margin: 22px auto 0; padding: 18px; display: flex; align-items: center; gap: 14px; background: var(--white); border: 1px solid #e4ddcf; border-radius: 14px; text-align: left; }
+
+.result-icon { width: 38px; height: 38px; flex-shrink: 0; display: grid; place-items: center; background: #e8f7ed; color: var(--green); border-radius: 50%; font-weight: 700; }
+
+.result-details { flex: 1; min-width: 0; }
+
+.result-details h4 { color: #24211e; font-size: 15px; font-weight: 700; }
+
+.result-details p { margin-top: 5px; color: #51483e; font-size: 13px; font-weight: 500; overflow-wrap: anywhere; }
+
+.download-button { padding: 10px 15px; background: var(--maroon); color: var(--white); border: 0; border-radius: 8px; font-weight: 700; cursor: pointer; transition: background .2s; }
+
+.download-button:hover { background: var(--maroon-hover); }
+
+/* =========================================
+   15. API STATUS & FOOTER
+========================================= */
+
+.shoot-caption { margin-top: 12px; color: var(--on-arena-muted); font-size: 13px; font-weight: 600; text-shadow: var(--arena-shadow); }
+
+.api-status { margin-top: 30px; display: flex; justify-content: center; align-items: center; gap: 9px; color: var(--on-arena-muted); font-size: 13px; font-weight: 600; text-shadow: var(--arena-shadow); }
+
+.status-dot { width: 9px; height: 9px; flex-shrink: 0; background: var(--green); border-radius: 50%; }
+
+.footer { position: relative; z-index: 2; width: 100%; margin-top: auto; padding: 20px; background: #ffffff; border-top: 1px solid var(--border); text-align: center; }
+
+.footer p { color: #51483e; font-size: 12px; font-weight: 500; }
+
+/* =========================================
+   16. RESPONSIVE DESIGN
+========================================= */
+
+@media (max-width: 600px) {
+  .app { background-attachment: scroll; background-position: center center; }
+  .header { height: 72px; padding: 0 20px; }
+  .brand-icon { width: 38px; height: 38px; }
+  .brand h1 { font-size: 22px; }
+  .header-label { font-size: 9px; letter-spacing: 1px; }
+  .hero { padding: 55px 20px 35px; }
+  .hero h2 { font-size: clamp(38px, 10vw, 52px); }
+  .eyebrow { font-size: 10px; letter-spacing: 2px; }
+  .description { font-size: 13px; }
+  .converter-section { width: calc(100% - 28px); margin-bottom: 45px; }
+  .format-list { gap: 10px; margin-bottom: 25px; }
+  .format-chip { padding: 10px 13px; font-size: 11px; }
+  .upload-court { min-height: 500px; }
+  .drop-zone { right: 12px; left: 12px; height: 245px; }
+  .upload-progress-card { right: 10px; left: 10px; padding: 10px; }
+  .progress-file-top { gap: 6px; }
+  .progress-filename { font-size: 10px; }
+  .progress-file-bottom { font-size: 9px; }
+  .basket-assembly { top: 150px; transform: translateX(-50%) scale(.88); transform-origin: top center; }
+  .document-token { left: 15px; bottom: 65px; }
+  .court-bottom { bottom: 45px; }
+  .court-caption { padding: 0 8px; font-size: 8px; letter-spacing: 1px; }
+  .result-card { flex-wrap: wrap; padding: 14px; }
+  .download-button { width: 100%; }
+  .message-box { font-size: 12px; }
+}
+
+@media (max-width: 360px) {
+  .header { padding: 0 14px; }
+  .header-label { font-size: 8px; }
+  .format-chip { padding: 9px 10px; font-size: 10px; }
+  .progress-status { font-size: 9px; }
+  .upload-court { min-height: 480px; }
+}
+
+/* =========================================
+   17. ACCESSIBILITY
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .basket-assembly.net-scored .basket-net, .document-token { animation: none; }
+  .format-chip, .progress-fill, .upload-empty-state, .upload-progress-card, .document-paper { transition: none; }
+}
