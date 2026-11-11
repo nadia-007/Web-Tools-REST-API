@@ -78,6 +78,12 @@ button:disabled { cursor: not-allowed; }
 
 .brand h1 { color: var(--maroon); font-size: 25px; font-weight: 700; }
 
+.header-actions { display: flex; align-items: center; gap: 14px; }
+
+.sound-toggle { width: 36px; height: 36px; display: grid; place-items: center; background: var(--white); border: 1px solid var(--border); border-radius: 50%; font-size: 16px; line-height: 1; cursor: pointer; transition: background .2s, border-color .2s; }
+
+.sound-toggle:hover { background: #f5e8d1; border-color: #d9cbb2; }
+
 .header-label { color: #51483e; font-size: 12px; font-weight: 600; letter-spacing: 1.8px; }
 
 /* =========================================
@@ -356,4 +362,200 @@ button:disabled { cursor: not-allowed; }
 @media (prefers-reduced-motion: reduce) {
   .basket-assembly.net-scored .basket-net, .document-token { animation: none; }
   .format-chip, .progress-fill, .upload-empty-state, .upload-progress-card, .document-paper { transition: none; }
+}
+
+/* =========================================
+   18. PDF TO WORD MODE SELECTOR
+========================================= */
+
+.pdf-mode-selector {
+  width: 100%;
+  max-width: 650px;
+  margin: 0 auto 24px;
+  padding: 17px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 5px 18px rgba(55,40,20,.08);
+  text-align: left;
+}
+
+.pdf-mode-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 14px;
+}
+
+.pdf-mode-heading strong {
+  color: #24211e;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.pdf-mode-heading span {
+  color: #77716a;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.pdf-mode-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 11px;
+}
+
+.pdf-mode-option {
+  position: relative;
+  min-width: 0;
+  min-height: 91px;
+  padding: 12px;
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr) 20px;
+  align-items: center;
+  gap: 9px;
+  background: #ffffff;
+  border: 1.5px solid #e8e2d8;
+  border-radius: 11px;
+  color: #24211e;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background .2s ease,
+    border-color .2s ease,
+    transform .2s ease;
+}
+
+.pdf-mode-option:hover:not(:disabled) {
+  background: #fffaf2;
+  border-color: #c9a68c;
+  transform: translateY(-2px);
+}
+
+.pdf-mode-option.active {
+  background: #fff8ef;
+  border-color: var(--maroon);
+  box-shadow: 0 0 0 1px var(--maroon);
+}
+
+.pdf-mode-option:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+.pdf-mode-icon {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  background: #f5e8e0;
+  color: var(--maroon);
+  border-radius: 9px;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.pdf-mode-icon.preserve {
+  background: #eeeaff;
+  color: var(--purple);
+}
+
+.pdf-mode-copy {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.pdf-mode-copy strong {
+  color: #24211e;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.pdf-mode-copy small {
+  color: #77716a;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.pdf-mode-check {
+  width: 19px;
+  height: 19px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #d7d0c7;
+  border-radius: 50%;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.pdf-mode-option.active .pdf-mode-check {
+  background: var(--maroon);
+  border-color: var(--maroon);
+}
+
+/* =========================================
+   19. CONVERSION PROGRESS ANIMATION
+========================================= */
+
+.progress-fill.converting {
+  width: 35% !important;
+  background: var(--maroon);
+  animation: conversion-sweep 1.25s ease-in-out infinite;
+}
+
+@keyframes conversion-sweep {
+  from {
+    transform: translateX(-110%);
+  }
+
+  to {
+    transform: translateX(310%);
+  }
+}
+
+/* =========================================
+   20. RESPONSIVE PDF MODE
+========================================= */
+
+@media (max-width: 600px) {
+  .pdf-mode-selector {
+    padding: 13px;
+    margin-bottom: 20px;
+  }
+
+  .pdf-mode-options {
+    grid-template-columns: 1fr;
+    gap: 9px;
+  }
+
+  .pdf-mode-option {
+    min-height: 78px;
+    padding: 10px;
+  }
+
+  .pdf-mode-copy strong {
+    font-size: 12px;
+  }
+
+  .pdf-mode-copy small {
+    font-size: 10px;
+  }
+}
+
+
+/* Respect reduced-motion preferences. */
+
+@media (prefers-reduced-motion: reduce) {
+  .progress-fill.converting {
+    animation: none;
+    width: 100% !important;
+  }
+
+  .pdf-mode-option {
+    transition: none;
+  }
 }
